@@ -13,8 +13,8 @@ let isVideo = false
 // imageScaleFactor: 0.7,
 const modelParams = {
   flipHorizontal: true,
-  maxNumBoxes: 3,
-  iouThreshold: 0.7,
+  maxNumBoxes: 4,
+  iouThreshold: 0.5,
   scoreThreshold: 0.7,
 }
 
