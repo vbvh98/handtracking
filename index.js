@@ -14,7 +14,7 @@ const modelParams = {
   imageScaleFactor: 0.6,
   maxNumBoxes: 4, // maximum number of boxes to detect
   iouThreshold: 0.4, // ioU threshold for non-max suppression
-  scoreThreshold: 0.7, // confidence threshold for predictions.
+  scoreThreshold: 0.7 // confidence threshold for predictions.
 }
 
 // Load the model.
@@ -23,9 +23,6 @@ handTrack.load(modelParams).then(lmodel => {
   model = lmodel
   div.innerText += 'Loaded Model!'
 })
-
-// video.width = 500
-// video.height = 400
 
 const init = async () => {
   let model = await handTrack.load()
@@ -50,16 +47,11 @@ const strtVideo = () => {
 let distOld = -1
 let dif = 0
 let gestureCount = 0
-const [w, h] = [canvas.width, canvas.height]
 let [distx, disty] = [null, null]
 let [ox, oy] = [0, 0]
-let xs = []
-let ys = []
 
 let gestRecorded = true
 let direction = ''
-let hinc = null
-let vinc = null
 
 async function runDetection() {
   await model.detect(video).then(predictions => {
@@ -89,7 +81,7 @@ async function runDetection() {
               ? 'down'
               : 'up'
           gestRecorded = true
-          console.log(direction)
+          console.log(direction, distx, disty)
         }
       }
 
