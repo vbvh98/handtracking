@@ -1,4 +1,3 @@
-//const handTrack = require('handtrackjs')
 const video = document.getElementById('myvideo')
 const canvas = document.getElementById('image-board')
 const context = canvas.getContext('2d')
