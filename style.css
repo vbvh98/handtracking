@@ -10,4 +10,28 @@ body {
 	place-items: center;
 	max-width: 100vw;
 	overflow: hidden;
+	display: flex;
 }
+
+body > * {
+	flex: 1;
+}
+
+.btns {
+	display: flex;
+	flex-direction: column;
+}
+
+#pred {
+	display: grid;
+	place-items: center;
+	text-transform: uppercase;
+	font-family: Helvetica;
+	font-size: 4rem;
+}
+
+/*
+canvas {
+	display: none;
+}
+*/
