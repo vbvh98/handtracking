@@ -11,10 +11,10 @@ let model = null
 
 const modelParams = {
   flipHorizontal: true, // flip e.g for video
-  imageScaleFactor: 0.7,
-  maxNumBoxes: 3, // maximum number of boxes to detect
-  iouThreshold: 0.5, // ioU threshold for non-max suppression
-  scoreThreshold: 0.7 // confidence threshold for predictions.
+  imageScaleFactor: 0.6,
+  maxNumBoxes: 4, // maximum number of boxes to detect
+  iouThreshold: 0.4, // ioU threshold for non-max suppression
+  scoreThreshold: 0.7, // confidence threshold for predictions.
 }
 
 // Load the model.
@@ -50,14 +50,16 @@ const strtVideo = () => {
 let distOld = -1
 let dif = 0
 let gestureCount = 0
-//const [w, h] = [canvas.width, canvas.height]
+const [w, h] = [canvas.width, canvas.height]
 let [distx, disty] = [null, null]
 let [ox, oy] = [0, 0]
-// let xs = []
-// let ys = []
+let xs = []
+let ys = []
 
 let gestRecorded = true
 let direction = ''
+let hinc = null
+let vinc = null
 
 async function runDetection() {
   await model.detect(video).then(predictions => {
@@ -87,7 +89,7 @@ async function runDetection() {
               ? 'down'
               : 'up'
           gestRecorded = true
-          console.log(direction, distx, disty)
+          console.log(direction)
         }
       }
 
@@ -120,7 +122,7 @@ async function runDetection() {
 
         console.log(actualDir)
       }
-	  */
+    */
       model.renderPredictions(predictions, canvas, context, video)
     } else if (predictions.length === 2) {
       //start and end points for both hands are assigned here
