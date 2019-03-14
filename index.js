@@ -11,7 +11,7 @@ let model = null
 
 const modelParams = {
   flipHorizontal: true, // flip e.g for video
-  imageScaleFactor: 0.6,
+  imageScaleFactor: 0.4,
   maxNumBoxes: 4, // maximum number of boxes to detect
   iouThreshold: 0.4, // ioU threshold for non-max suppression
   scoreThreshold: 0.7 // confidence threshold for predictions.
@@ -71,7 +71,7 @@ async function runDetection() {
         distx = x - ox
         disty = y - oy
 
-        if (Math.abs(distx) > 10 || Math.abs(disty) > 10) {
+        if (Math.abs(distx) > 30 || Math.abs(disty) > 30) {
           direction =
             Math.abs(distx) > Math.abs(disty)
               ? distx > 0
