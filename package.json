@@ -1,0 +1,14 @@
+{
+  "name": "hand-track",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "http-server . -o"
+  },
+  "author": "vaibhav bhawalkar",
+  "license": "MIT",
+  "dependencies": {
+    "handtrackjs": "0.0.13"
+  }
+}
