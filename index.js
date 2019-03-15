@@ -8,14 +8,15 @@ const div = document.getElementById('pred')
 let one = false
 let two = true
 video.style.display = 'none'
+document.body.style.background = 'tomato'
 let isVideo = false
 
-// imageScaleFactor: 0.7,
 const modelParams = {
   flipHorizontal: true,
-  maxNumBoxes: 4,
+  imageScaleFactor: 0.6,
+  maxNumBoxes: 3,
   iouThreshold: 0.5,
-  scoreThreshold: 0.7,
+  scoreThreshold: 0.7
 }
 
 let [distx, disty] = [null, null]
@@ -30,6 +31,7 @@ let model = null
 handTrack.load(modelParams).then(lmodel => {
   // detect objects in the image.
   console.log('Loaded Model!')
+  document.body.style.background = 'lightgreen'
   model = lmodel
 })
 
@@ -107,7 +109,7 @@ const getOpenClose = predictions => {
   // distance between both hands
   const dist = Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
   //debouncing for open and close gestures
-  if (gestureCount > 5 || gestureCount < -5) gestureCount = 0
+  if (gestureCount > 3 || gestureCount < -3) gestureCount = 0
   if (distOld === -1) {
     //initiating for the first distance between hands
     distOld = dist
@@ -123,19 +125,19 @@ const getOpenClose = predictions => {
   if (dif === distOld - dist) {
     //calculation for actual gestures open or close
     gesture = dif > 0 ? 'close' : 'open'
-    // if (gesture === 'open') gestureCount++
-    // //incrementing for 3 consecutive open captures
-    // else gestureCount--
-    // //decrementing for 3 consecutive close captures
+    if (gesture === 'open') gestureCount++
+    //incrementing for 3 consecutive open captures
+    else gestureCount--
+    //decrementing for 3 consecutive close captures
   }
   //assigning the new distance to the old distance
   distOld = dist
-  return gesture
-  // if (gestureCount > 2) {
-  //   return 'open'
-  // } else if (gestureCount < -2) {
-  //   return 'close'
-  // }
+  // return gesture
+  if (gestureCount > 2) {
+    return 'open'
+  } else if (gestureCount < -2) {
+    return 'close'
+  }
 }
 
 async function runDetection() {
