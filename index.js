@@ -5,16 +5,16 @@ const btn = document.getElementById('btn')
 const btn1 = document.getElementById('btn-one')
 const btn2 = document.getElementById('btn-two')
 const div = document.getElementById('pred')
-let one = false
-let two = true
+let one = true
+let two = false
 video.style.display = 'none'
 document.body.style.background = 'tomato'
 let isVideo = false
 
 const modelParams = {
   flipHorizontal: true,
-  imageScaleFactor: 0.6,
-  maxNumBoxes: 3,
+  imageScaleFactor: 0.7,
+  maxNumBoxes: 4,
   iouThreshold: 0.5,
   scoreThreshold: 0.7
 }
@@ -66,6 +66,7 @@ btn1.addEventListener('click', runone)
 btn2.addEventListener('click', runtwo)
 
 const getDirection = predictions => {
+  let direction = ''
   const p1x1 = parseInt(predictions[0].bbox[0])
   const p1y1 = parseInt(predictions[0].bbox[1])
   const p1x2 = parseInt(predictions[0].bbox[2])
@@ -82,15 +83,17 @@ const getDirection = predictions => {
 
     if (Math.abs(distx) > 10 || Math.abs(disty) > 10) {
       gestRecorded = true
-      return Math.abs(distx) > Math.abs(disty)
-        ? distx > 0
-          ? 'right'
-          : 'left'
-        : disty > 0
-        ? 'down'
-        : 'up'
+      direction =
+        Math.abs(distx) > Math.abs(disty)
+          ? distx > 0
+            ? 'right'
+            : 'left'
+          : disty > 0
+          ? 'down'
+          : 'up'
     }
   }
+  return direction
 }
 
 const getOpenClose = predictions => {
@@ -143,11 +146,15 @@ const getOpenClose = predictions => {
 async function runDetection() {
   await model.detect(video).then(predictions => {
     if (one && predictions.length >= 1) {
-      div.innerText = getDirection(predictions) || 'NONE'
+      div.innerText = getDirection(predictions)
+      if (div.innerText === 'down') btn2.click()
+      model.renderPredictions(predictions, canvas, context, video)
     } else if (two && predictions.length >= 2) {
-      div.innerText = getOpenClose(predictions) || 'NONE'
+      div.innerText = getOpenClose(predictions) || ''
+      if (div.innerText === 'open') btn1.click()
+      model.renderPredictions(predictions, canvas, context, video)
     }
-    model.renderPredictions(predictions, canvas, context, video)
+
     if (isVideo) {
       requestAnimationFrame(runDetection)
     } else {
