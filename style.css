@@ -21,6 +21,7 @@ body > * {
 	flex-basis: 100px;
 	display: flex;
 	flex-direction: column;
+	justify-content: flex-start;
 }
 
 #pred {
