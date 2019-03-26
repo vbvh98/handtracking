@@ -7,7 +7,6 @@ const btn2 = document.getElementById('btn-two')
 const div = document.getElementById('pred')
 let one = true
 let two = false
-video.style.display = 'none'
 document.body.style.background = 'tomato'
 let isVideo = false
 
@@ -32,6 +31,7 @@ handTrack.load(modelParams).then(lmodel => {
   // detect objects in the image.
   console.log('Loaded Model!')
   document.body.style.background = 'lightgreen'
+  div.innerHTML = '<p>Model Loaded click <strong>T</strong> to start</p>'
   model = lmodel
 })
 
